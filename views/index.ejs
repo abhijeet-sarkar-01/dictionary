@@ -1,0 +1,58 @@
+<%- include("partials/header.ejs")  %>
+
+<section>
+  <form action="/submit" method="POST">
+    <input type="text" name="enteredWord" class="inp-field" placeholder="Enter any word">
+    <input type="submit" class="btn" value="Search">
+  </form>
+
+  <% if (!locals.mainWord){ %>
+      <p>Search for a meaning 👆</p>
+  <% } %>
+
+  <div class="display">
+    <% if (locals.mainWord){ %>
+
+      <p class="main"><%= mainWord %></p>
+
+      <% if (locals.Phonetic){ %>
+        <p><%= Phonetic %></p>
+      <% } %>
+
+      <% if (locals.meaningArr){ %>
+        <ol>
+          <% for(let i = 0; i<meaningArr.length; i++){ %>
+            <li>
+              <p><%= meaningArr[i].partOfSpeech %></p>
+              
+              <% if (meaningArr[i].definitions){ %>
+              <ul>
+                <% for (let j = 0; j<Math.min(3, meaningArr[i].definitions.length); j++){ %>
+                  <li>
+                    <p><%= meaningArr[i].definitions[j].definition %></p>
+                    <% if (meaningArr[i].definitions[j].example){ %>
+                      <p><b>Example:</b> <%= meaningArr[i].definitions[j].example %></p>
+                    <% } %>
+                  </li>
+                <% } %>
+              </ul>
+              <% } %>
+
+            </li>
+          <% } %>
+        </ol>
+    <% } %>
+
+
+    <% } %>
+
+    <% if (locals.Error){ %>
+      <p class="error"><%= Error %></p>
+    <% } %>
+  </div>
+
+    
+</section>
+
+</body>
+</html>
